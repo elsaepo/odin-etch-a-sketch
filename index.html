@@ -1,16 +1,85 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="styles.css">
-        <title>pencil.</title>
-        <script src="etch-a-sketch.js" defer></script>
-    </head>
-    <body>
-        <div id="game-container">
-            <div id="grid-container">
-                
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>pencil.</title>
+    <script src="etch-a-sketch.js" defer></script>
+    <script src="https://kit.fontawesome.com/2d995dcb8e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="header-container">
+            <div class="title">
+                <h1>pencil.</h1>
+            </div>
+            <div class="subtitle">
+                <p>click to draw.</p>
+                <p>changing grid size clears drawing.</p>
             </div>
         </div>
-    </body>
+
+        <div id="grid-container">
+
+        </div>
+
+        <div class="settings-container">
+            <div class="settings-box">
+                <div class="settings-header" id="grid-settings">
+                    <i class="fa-solid fa-border-all fa-xl"></i>
+
+                </div>
+            </div>
+            <div class="settings-box">
+                <div class="settings-header color-fill" id="color-settings">
+                    <i class="fa-solid fa-fill fa-xl"></i>
+                </div>
+            </div>
+            <div class="settings-box">
+                <div class="settings-header pen-style settings-active" id="pen">
+                    <i class="fa-solid fa-pen-clip fa-xl"></i>
+                </div>
+            </div>
+            <div class="settings-box">
+                <div class="settings-header pen-style" id="brush">
+                    <i class="fa-solid fa-paintbrush fa-xl"></i>
+                </div>
+            </div>
+            <div class="settings-box">
+                <div class="settings-header pen-style" id="eraser">
+                    <i class="fa-solid fa-eraser fa-xl"></i>
+                </div>
+            </div>
+            <div class="settings-box">
+                <div class="settings-header">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </div>
+            </div>
+        </div>
+        <div class="settings-container popup-container">
+            <div class="settings-box grid-popup hidden">
+                <div class="settings-header grid-swatch" id="grid08">8x8</div>
+                <div class="settings-header grid-swatch settings-active" id="grid16">16x16</div>
+                <div class="settings-header grid-swatch" id="grid32">32x32</div>
+                <div class="settings-header grid-swatch" id="grid64">64x64</div>
+            </div>
+            <div class="settings-box color-popup">
+                <div class="settings-header color-swatch color-black"></div>
+                <div class="settings-header color-swatch color-white"></div>
+                <div class="settings-header color-swatch color-grey"></div>
+                <div class="settings-header color-swatch color-red"></div>
+                <div class="settings-header color-swatch color-orange"></div>
+                <div class="settings-header color-swatch color-yellow"></div>
+                <div class="settings-header color-swatch color-green"></div>
+                <div class="settings-header color-swatch color-blue"></div>
+                <div class="settings-header color-swatch color-purple"></div>
+                <div class="settings-header color-swatch color-pink"></div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
 </html>
