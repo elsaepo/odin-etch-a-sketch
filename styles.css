@@ -22,3 +22,7 @@ body {
 .grid-row {
     display: flex;
 }
+
+.black-fill {
+    background-color: black;
+}
