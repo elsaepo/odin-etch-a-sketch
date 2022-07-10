@@ -1,0 +1,24 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 10vh 0 0 0;
+    display: flex;
+    justify-content: center;
+}
+
+#game-container {
+    padding: 64px;
+    border: 2px solid grey;
+}
+
+#grid-container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid grey;
+}
+
+.grid-row {
+    display: flex;
+}
