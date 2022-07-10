@@ -13,10 +13,13 @@ function drawGrid(gridPixel) {
         let row = document.createElement("div");
         row.classList.add("grid-row");
         for (let j = 0; j < gridPixel; j++) {
-            let col = document.createElement("div");
-            col.classList.add("grid-item");
-            addMouseListener(col)
-            row.appendChild(col);
+            let pixelBorder = document.createElement("div");
+            pixelBorder.classList.add("grid-item-border");
+            let pixelDiv = document.createElement("div");
+            pixelDiv.classList.add("grid-item");
+            addMouseListener(pixelDiv)
+            pixelDiv.appendChild(pixelBorder)
+            row.appendChild(pixelDiv);
         };
         gridContainer.appendChild(row);
     };
@@ -31,7 +34,6 @@ let mouseButtonIsHolding = false;
 
 document.addEventListener("mouseup", function (e) {
     mouseButtonIsHolding = false;
-    console.log(mouseButtonIsHolding)
 })
 
 function addMouseListener(div) {
@@ -42,7 +44,6 @@ function addMouseListener(div) {
             draw(event.target);
             mouseButtonIsHolding = true;
         }
-        console.log(mouseButtonIsHolding)
     });
     div.addEventListener("mouseover", function (event) {
         if (mouseButtonIsHolding) {
@@ -58,6 +59,7 @@ function addMouseListener(div) {
 function draw(pixel) {
     switch (drawStyle){
         case "pen":
+            pixel.style.opacity = "1";
             pixel.style.backgroundColor = drawColor;
             break;
         case "brush":
@@ -72,7 +74,7 @@ function draw(pixel) {
 }
 
 
-// Settings holders
+// Settings holders & listeners
 
 let gridSettingsToggle = document.querySelector("#grid-settings");
 let gridSettingsContainer = document.querySelector(".grid-popup");
@@ -81,25 +83,57 @@ let gridSettingsSwatches = document.querySelectorAll(".grid-swatch");
 let colorSettingsToggle = document.querySelector("#color-settings");
 let colorSettingsContainer = document.querySelector(".color-popup");
 let colorSettingsSwatches = document.querySelectorAll(".color-swatch");
+let colorSettingsToggleIcon = document.querySelector(".color-fill i");
 
 let penSettingsSwatches = document.querySelectorAll(".pen-style");
 
+let clearSettingSwatch = document.querySelector("#clear");
+
 gridSettingsToggle.addEventListener("mousedown", function(event){
-    event.target.classList.toggle("settings-active");
+    colorSettingsToggle.classList.remove("settings-active");
     colorSettingsContainer.classList.add("hidden");
+    event.target.classList.toggle("settings-active");
     gridSettingsContainer.classList.toggle("hidden");
 })
 gridSettingsSwatches.forEach(swatch => swatch.addEventListener("mousedown", function(event){
     gridSettingsSwatches.forEach(grid => grid.classList.remove("settings-active"));
     event.target.classList.add("settings-active");
-    gridSize = event.target.getAttribute("id").slice(4);
+    gridSize = event.target.getAttribute("id").slice(5);
     drawGrid(gridSize);
 }));
 
+colorSettingsToggle.addEventListener("mousedown", function(event){
+    gridSettingsToggle.classList.remove("settings-active");
+    gridSettingsContainer.classList.add("hidden");
+    event.target.classList.toggle("settings-active");
+    colorSettingsContainer.classList.toggle("hidden");
+})
 
+colorSettingsSwatches.forEach(function(swatch){ 
+    let swatchColor = `${swatch.getAttribute("id").slice(6)}`;
+    swatch.style.backgroundColor = swatchColor;
+    swatch.addEventListener("mousedown", function(event){
+        colorSettingsSwatches.forEach(color => color.classList.remove("settings-active"));
+        event.target.classList.add("settings-active");
+        drawColor = swatchColor;
+        colorSettingsToggle.style.backgroundColor = swatchColor;
+        switch (swatchColor){
+            case "black":
+            case "#545454":
+                colorSettingsToggleIcon.style.color = "white";
+                break;
+            default:
+                colorSettingsToggleIcon.style.color = "black";
+        }
+    })
+})
 
 penSettingsSwatches.forEach(swatch => swatch.addEventListener("mousedown", function(event){
     penSettingsSwatches.forEach(pen => pen.classList.remove("settings-active"));
     event.target.classList.add("settings-active");
     drawStyle = event.target.getAttribute("id");
 }))
+
+clearSettingSwatch.addEventListener("mousedown", function(){
+    drawGrid(gridSize);
+});

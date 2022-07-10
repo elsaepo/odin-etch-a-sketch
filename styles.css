@@ -57,15 +57,19 @@ h1, p {
     flex-grow: 1;
 }
 
-.grid-item {
+.grid-item-border {
     display: flex;
     flex-grow: 1;
     border: 1px solid rgba(55, 55, 55, 0.2);
+    pointer-events: none;
+    z-index: 2;
 }
 
-.color-fill {
-    background-color: grey;
+.grid-item {
+    display: flex;
+    flex-grow: 1;
 }
+
 
 /* The settings container and its settings */
 
@@ -73,6 +77,22 @@ h1, p {
     width: 100%;
     height: 64px;
     display: flex;
+}
+
+i {
+    pointer-events: none;
+}
+
+.color-fill {
+    background-color: black;
+}
+
+.color-fill i {
+    color: white;
+}
+
+.popup-container {
+    align-items: flex-start;
 }
 
 .settings-box {
@@ -91,22 +111,30 @@ h1, p {
     align-items: center;
 }
 
-.settings-header:hover {
+.settings-header:not(.color-fill):hover {
     background-color: rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
 
-i {
-    pointer-events: none;
+.color-fill:hover {
+    cursor: pointer;
 }
 
 .settings-active {
     border: 4px solid black;
+}
+
+.settings-active:not(.color-fill) {
     background-color: rgba(0, 0, 0, 0.3)
 }
 
 .hidden {
     display: none;
+}
+
+#clear:active {
+    background-color: white;
+    border: 4px solid black;
 }
 
 .grid-popup {
