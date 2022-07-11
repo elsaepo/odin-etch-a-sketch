@@ -57,17 +57,11 @@ h1, p {
     flex-grow: 1;
 }
 
-.grid-item-border {
+.grid-item {
+    background-color: white;
     display: flex;
     flex-grow: 1;
     border: 1px solid rgba(55, 55, 55, 0.2);
-    pointer-events: none;
-    z-index: 2;
-}
-
-.grid-item {
-    display: flex;
-    flex-grow: 1;
 }
 
 
@@ -116,7 +110,8 @@ i {
     cursor: pointer;
 }
 
-.color-fill:hover {
+/* uses seperate :hover/active properties based on color selected */
+.color-fill:hover { 
     cursor: pointer;
 }
 
@@ -125,7 +120,7 @@ i {
 }
 
 .settings-active:not(.color-fill) {
-    background-color: rgba(0, 0, 0, 0.3)
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .hidden {
@@ -137,15 +132,12 @@ i {
     border: 4px solid black;
 }
 
-.grid-popup {
+.grid-popup, .color-popup {
     gap: 16px;
-}
-.grid-swatch {
-    width: 84px;
 }
 
-.color-popup {
-    gap: 16px;
+.grid-swatch {
+    width: 84px;
 }
 
 .color-swatch {

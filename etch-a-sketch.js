@@ -1,10 +1,9 @@
 const gridContainer = document.querySelector("#grid-container");
 let gridSize = 16;
 let drawStyle = "pen";
-let drawColor = "black";
+let drawColor = "000, 000 ,000";
 
 // Drawing the grid
-
 function drawGrid(gridPixel) {
     while (gridContainer.firstChild){
         gridContainer.removeChild(gridContainer.firstChild)
@@ -13,12 +12,11 @@ function drawGrid(gridPixel) {
         let row = document.createElement("div");
         row.classList.add("grid-row");
         for (let j = 0; j < gridPixel; j++) {
-            let pixelBorder = document.createElement("div");
-            pixelBorder.classList.add("grid-item-border");
             let pixelDiv = document.createElement("div");
             pixelDiv.classList.add("grid-item");
+            // Set initial opacity of the pen - it will change based on drawStyle setting
+            pixelDiv.drawOpacity = 0;
             addMouseListener(pixelDiv)
-            pixelDiv.appendChild(pixelBorder)
             row.appendChild(pixelDiv);
         };
         gridContainer.appendChild(row);
@@ -29,7 +27,6 @@ drawGrid(gridSize);
 
 
 // mousedown, mouseup, mouseover functions determing when to draw
-
 let mouseButtonIsHolding = false;
 
 document.addEventListener("mouseup", function (e) {
@@ -55,17 +52,18 @@ function addMouseListener(div) {
 
 
 // Draw function & cases for different styles
-
 function draw(pixel) {
     switch (drawStyle){
         case "pen":
-            pixel.style.opacity = "1";
-            pixel.style.backgroundColor = drawColor;
+            pixel.drawOpacity = 1;
+            pixel.style.backgroundColor = `rgba(${drawColor}, ${pixel.drawOpacity})`;
             break;
         case "brush":
-            pixel.style.backgroundColor = "grey";
+            pixel.drawOpacity += 0.1;
+            pixel.style.backgroundColor = `rgba(${drawColor}, ${pixel.drawOpacity})`;
             break;
         case "eraser":
+            pixel.drawOpacity = 0;
             pixel.style.backgroundColor = "";
             break;
         default:
@@ -75,7 +73,6 @@ function draw(pixel) {
 
 
 // Settings holders & listeners
-
 let gridSettingsToggle = document.querySelector("#grid-settings");
 let gridSettingsContainer = document.querySelector(".grid-popup");
 let gridSettingsSwatches = document.querySelectorAll(".grid-swatch");
@@ -109,17 +106,19 @@ colorSettingsToggle.addEventListener("mousedown", function(event){
     colorSettingsContainer.classList.toggle("hidden");
 })
 
+// Takes RGB value based on container's ID in index.html - must be RGB as "brush" drawStyle is based on rgba opacity
 colorSettingsSwatches.forEach(function(swatch){ 
-    let swatchColor = `${swatch.getAttribute("id").slice(6)}`;
-    swatch.style.backgroundColor = swatchColor;
+    let swatchId = `${swatch.getAttribute("id")}`;
+    let swatchColor = `${swatchId.slice(6, 9)}, ${swatchId.slice(9, 12)}, ${swatchId.slice(12, 15)}`
+    swatch.style.backgroundColor = `rgb(${swatchColor})`;
     swatch.addEventListener("mousedown", function(event){
         colorSettingsSwatches.forEach(color => color.classList.remove("settings-active"));
         event.target.classList.add("settings-active");
         drawColor = swatchColor;
-        colorSettingsToggle.style.backgroundColor = swatchColor;
+        colorSettingsToggle.style.backgroundColor = `rgb(${swatchColor})`;
         switch (swatchColor){
-            case "black":
-            case "#545454":
+            case "000, 000, 000":
+            case "084, 084, 084":
                 colorSettingsToggleIcon.style.color = "white";
                 break;
             default:
